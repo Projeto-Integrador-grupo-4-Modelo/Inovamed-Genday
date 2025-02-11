@@ -1,27 +1,13 @@
-import React, { useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import {
   Calendar,
-  LogOut,
   UserPlus,
   CalendarPlus,
   LayoutDashboard,
   User,
 } from "lucide-react";
-import { AuthContext } from "../../context/AuthContext";
-import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
 
 export function Sidebar() {
-  const navigate = useNavigate();
-  const { handleLogout } = useContext(AuthContext);
-
-  function Logout() {
-    handleLogout();
-
-    toast.success("O Usuário foi desconectado com sucesso!");
-    navigate("/");
-  }
-
   const menuItems = [
     {
       icon: LayoutDashboard,
@@ -76,16 +62,6 @@ export function Sidebar() {
           ))}
         </ul>
       </nav>
-
-      <div className="p-4 border-t border-white/10 rounded-lg">
-        <button
-          onClick={Logout}
-          className="flex items-center gap-3 px-4 py-3 w-full rounded-lg hover:bg-white/10 transition-colors duration-200 group"
-        >
-          <LogOut className="h-5 w-5 group-hover:scale-110 transition-transform duration-200" />
-          <span className="font-medium">Sair</span>
-        </button>
-      </div>
     </div>
   );
 }
