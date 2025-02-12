@@ -1,4 +1,4 @@
-import { User, Phone, Mail, MapPin, FileText, Heart, Send } from "lucide-react";
+import { User, Phone, Mail, MapPin, FileText, Heart, Send, Search } from "lucide-react";
 import Cliente from "../../../models/Cliente";
 import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -126,8 +126,8 @@ function FormPaciente() {
                 required
               />
             </div>
-            
-           <div>
+
+            <div>
               <label className="flex items-center text-sm font-medium mb-1">
                 <Phone className="w-4 h-4 mr-2 text-[#29bda6]" />
                 Telefone
@@ -138,12 +138,13 @@ function FormPaciente() {
                   name="telefone"
                   placeholder="Digite seu telefone"
                   className="w-full px-4 py-2 border rounded-l-md focus:ring-2 focus:ring-[#29bda6] transition-colors"
-                  value={cliente.telefone || ""}
-                  onChange={atualizarEstado}
+                  value={"+55" + (cliente.telefone?.replace(/^\+55/, "") || "")} // Preenche o número com +55 fixo
+                  onChange={(e) => atualizarEstado(e)} // Atualiza o estado do telefone sem alterar o +55
                   required
                 />
               </div>
             </div>
+
 
             <div>
               <label className="flex items-center text-sm font-medium mb-1">
