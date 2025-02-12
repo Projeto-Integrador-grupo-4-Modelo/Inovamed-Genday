@@ -138,8 +138,8 @@ function FormPaciente() {
                   name="telefone"
                   placeholder="Digite seu telefone"
                   className="w-full px-4 py-2 border rounded-l-md focus:ring-2 focus:ring-[#29bda6] transition-colors"
-                  value={"+55" + (cliente.telefone?.replace(/^\+55/, "") || "")} // Preenche o número com +55 fixo
-                  onChange={(e) => atualizarEstado(e)} // Atualiza o estado do telefone sem alterar o +55
+                  value={"+55" + (cliente.telefone?.replace(/^\+55/, "") || "")}
+                  onChange={(e) => atualizarEstado(e)}
                   required
                 />
               </div>
