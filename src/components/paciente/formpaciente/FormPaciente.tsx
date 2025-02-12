@@ -1,4 +1,4 @@
-import { User, Phone, Mail, MapPin, FileText, Heart } from "lucide-react";
+import { User, Phone, Mail, MapPin, FileText, Heart, Send } from "lucide-react";
 import Cliente from "../../../models/Cliente";
 import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -126,21 +126,23 @@ function FormPaciente() {
                 required
               />
             </div>
-
-            <div>
+            
+           <div>
               <label className="flex items-center text-sm font-medium mb-1">
                 <Phone className="w-4 h-4 mr-2 text-[#29bda6]" />
                 Telefone
               </label>
-              <input
-                type="tel"
-                name="telefone"
-                placeholder="Digite seu telefone"
-                className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-[#29bda6] transition-colors"
-                value={cliente.telefone || ""}
-                onChange={atualizarEstado}
-                required
-              />
+              <div className="flex">
+                <input
+                  type="tel"
+                  name="telefone"
+                  placeholder="Digite seu telefone"
+                  className="w-full px-4 py-2 border rounded-l-md focus:ring-2 focus:ring-[#29bda6] transition-colors"
+                  value={cliente.telefone || ""}
+                  onChange={atualizarEstado}
+                  required
+                />
+              </div>
             </div>
 
             <div>
