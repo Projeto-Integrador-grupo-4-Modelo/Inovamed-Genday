@@ -54,8 +54,7 @@ function FormConsultas() {
       if (clienteEncontrado) {
         setConsulta((prev) => ({ ...prev, cliente: clienteEncontrado }));
       }
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
-    } catch (error: any) {
+    } catch (error) {
       setCliente(null);
       setConsulta((prev) => ({ ...prev, cliente: null }));
     } finally {
@@ -107,6 +106,9 @@ function FormConsultas() {
       });
 
       toast.success("Consulta cadastrada com sucesso!");
+
+      abrirWhatsAppConsulta();
+
       navigate("/dashboard/Consulta");
     } catch (error) {
       console.error("Erro ao cadastrar:", error);
@@ -133,6 +135,32 @@ function FormConsultas() {
     }
   }, [token, navigate]);
 
+  function abrirWhatsAppConsulta() {
+    if (!cliente || !cliente.telefone) {
+      toast.error("Cliente ou telefone inválido!");
+      return;
+    }
+
+    const telefoneFormatado = cliente.telefone.replace(/\D/g, ""); 
+
+    const mensagem = `
+    Olá ${decodeURIComponent(cliente.nome)}, sua consulta foi agendada com sucesso! 
+    Aqui estão os detalhes:
+    
+    Especialidade: ${decodeURIComponent(consulta.especialidade)}
+    Data: ${decodeURIComponent(consulta.data)}
+    Médico Responsável: ${decodeURIComponent(consulta.medicoResponsavel)}
+    Queixa: ${decodeURIComponent(consulta.queixa)}
+    Status: ${decodeURIComponent(consulta.status)}
+
+    Aguardamos você no horário agendado. Qualquer dúvida, estamos à disposição.
+  `;
+
+    const whatsappUrl = `https://api.whatsapp.com/send?phone=${telefoneFormatado}&text=${encodeURIComponent(mensagem)}`;
+
+    window.open(whatsappUrl, "_blank");
+  }
+
   return (
     <div className="min-h-screen py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-2xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
@@ -158,16 +186,14 @@ function FormConsultas() {
               />
               {buscaRealizada && (
                 <p
-                  className={`mt-2 text-sm ${
-                    cliente ? "text-green-600" : "text-red-600"
-                  }`}
+                  className={`mt-2 text-sm ${cliente ? "text-green-600" : "text-red-600"
+                    }`}
                 >
                   {cliente
-                    ? `Cliente encontrado: ${cliente.nome}${
-                        cliente.convenio
-                          ? " - Este paciente possui convênio ✅"
-                          : ""
-                      }`
+                    ? `Cliente encontrado: ${cliente.nome}${cliente.convenio
+                      ? " - Este paciente possui convênio ✅"
+                      : ""
+                    }`
                     : "Nenhum Cliente encontrado!"}
                 </p>
               )}
@@ -260,7 +286,6 @@ function FormConsultas() {
                   required
                 >
                   <option value="Em andamento">Em andamento</option>
-
                   <option value="Cancelada">Cancelada</option>
                   <option value="Confirmada">Confirmada</option>
                 </select>
@@ -271,11 +296,10 @@ function FormConsultas() {
               <button
                 type="submit"
                 disabled={isLoading || !cliente}
-                className={`w-full py-3 px-4 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-[#6366f1] focus:ring-offset-2 text-lg font-medium ${
-                  isLoading || !cliente
+                className={`w-full py-3 px-4 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-[#6366f1] focus:ring-offset-2 text-lg font-medium ${isLoading || !cliente
                     ? "bg-gray-400 cursor-not-allowed"
                     : "bg-[#29bda6] hover:bg-[#278b7c] text-white"
-                }`}
+                  }`}
               >
                 {isLoading ? "Cadastrando..." : "Cadastrar Consulta"}
               </button>
