@@ -4,10 +4,14 @@ import {
   CalendarPlus,
   LayoutDashboard,
   User,
+  ChevronDown,
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 export function Sidebar() {
+  const [isSubmenuOpen, setIsSubmenuOpen] = useState(false);
+
   const menuItems = [
     {
       icon: LayoutDashboard,
@@ -19,16 +23,21 @@ export function Sidebar() {
       label: "Agenda",
       path: "/dashboard/Consulta",
     },
-
-    {
-      icon: Calendar,
-      label: "Cadastro de Consulta",
-      path: "/dashboard/cadastro-consulta",
-    },
     {
       icon: UserPlus,
-      label: "Cadastro de Paciente",
-      path: "/dashboard/cadastro-paciente",
+      label: "Cadastrar",
+      submenu: [
+        {
+          icon: Calendar,
+          label: "Consulta",
+          path: "/dashboard/cadastro-consulta",
+        },
+        {
+          icon: UserPlus,
+          label: "Paciente",
+          path: "/dashboard/cadastro-paciente",
+        },
+      ],
     },
     {
       icon: User,
@@ -51,13 +60,47 @@ export function Sidebar() {
         <ul className="space-y-2">
           {menuItems.map((item, index) => (
             <li key={index}>
-              <Link
-                to={item.path}
-                className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/10 transition-colors duration-200 group "
-              >
-                <item.icon className="h-5 w-5 group-hover:scale-110 transition-transform duration-200" />
-                <span className="font-medium">{item.label}</span>
-              </Link>
+              {item.submenu ? (
+                <div>
+                  <button
+                    onClick={() => setIsSubmenuOpen(!isSubmenuOpen)}
+                    className="w-full flex items-center justify-between gap-3 px-4 py-3 rounded-lg hover:bg-white/10 transition-colors duration-200 group"
+                  >
+                    <div className="flex items-center gap-3">
+                      <item.icon className="h-5 w-5 group-hover:scale-110 transition-transform duration-200" />
+                      <span className="font-medium">{item.label}</span>
+                    </div>
+                    <ChevronDown
+                      className={`h-4 w-4 transition-transform duration-200 translate-x-5 opacity-0 group-hover:opacity-100 group-hover:translate-x-0    ${
+                        isSubmenuOpen ? "rotate-180" : ""
+                      }`}
+                    />
+                  </button>
+                  {isSubmenuOpen && (
+                    <ul className="ml-4 mt-2 space-y-2">
+                      {item.submenu.map((subItem, subIndex) => (
+                        <li key={`${index}-${subIndex}`}>
+                          <Link
+                            to={subItem.path}
+                            className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/10 transition-colors duration-200 group"
+                          >
+                            <subItem.icon className="h-5 w-5 group-hover:scale-110 transition-transform duration-200" />
+                            <span className="font-medium">{subItem.label}</span>
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              ) : (
+                <Link
+                  to={item.path}
+                  className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/10 transition-colors duration-200 group"
+                >
+                  <item.icon className="h-5 w-5 group-hover:scale-110 transition-transform duration-200" />
+                  <span className="font-medium">{item.label}</span>
+                </Link>
+              )}
             </li>
           ))}
         </ul>
