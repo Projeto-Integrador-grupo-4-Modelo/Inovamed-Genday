@@ -1,3 +1,4 @@
+
 import React, { useContext, useEffect, useState } from "react";
 import {
   Stethoscope,
@@ -141,19 +142,28 @@ function FormConsultas() {
       return;
     }
 
-    const telefoneFormatado = cliente.telefone.replace(/\D/g, ""); 
+    const telefoneFormatado = cliente.telefone.replace(/\D/g, "");
+
+    const formatarData = (data: string) => {
+      const partesData = data.split("-");
+      const dia = partesData[2];
+      const mes = partesData[1];
+      const ano = partesData[0];
+      return `${dia}/${mes}/${ano}`;
+    };
 
     const mensagem = `
     Olá ${decodeURIComponent(cliente.nome)}, sua consulta foi agendada com sucesso! 
+
     Aqui estão os detalhes:
-    
+
     Especialidade: ${decodeURIComponent(consulta.especialidade)}
-    Data: ${decodeURIComponent(consulta.data)}
+    Data: ${formatarData(decodeURIComponent(consulta.data))}
     Médico Responsável: ${decodeURIComponent(consulta.medicoResponsavel)}
     Queixa: ${decodeURIComponent(consulta.queixa)}
     Status: ${decodeURIComponent(consulta.status)}
 
-    Aguardamos você no horário agendado. Qualquer dúvida, estamos à disposição.
+    Aguardamos você na data e horário agendado. Qualquer dúvida, estamos à disposição.
   `;
 
     const whatsappUrl = `https://api.whatsapp.com/send?phone=${telefoneFormatado}&text=${encodeURIComponent(mensagem)}`;
@@ -178,7 +188,7 @@ function FormConsultas() {
               <input
                 type="text"
                 placeholder="Digite o CPF do paciente"
-                className="w-2/3 px-4 py-2 border border-[#] rounded-md focus:ring-2 focus:ring-[#] focus:border-[#] transition-colors"
+                className="w-full px-4 py-2 border border-[#] rounded-md focus:ring-2 focus:ring-[#] focus:border-[#] transition-colors"
                 value={cpf}
                 onChange={handleCpfChange}
                 onKeyDown={handleCpfKeyDown}
@@ -297,8 +307,8 @@ function FormConsultas() {
                 type="submit"
                 disabled={isLoading || !cliente}
                 className={`w-full py-3 px-4 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-[#6366f1] focus:ring-offset-2 text-lg font-medium ${isLoading || !cliente
-                    ? "bg-gray-400 cursor-not-allowed"
-                    : "bg-[#29bda6] hover:bg-[#278b7c] text-white"
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-[#29bda6] hover:bg-[#278b7c] text-white"
                   }`}
               >
                 {isLoading ? "Cadastrando..." : "Cadastrar Consulta"}
