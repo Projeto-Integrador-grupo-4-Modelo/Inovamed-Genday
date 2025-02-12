@@ -1,4 +1,4 @@
-import { User, Phone, Mail, MapPin, FileText, Heart, Send, Search } from "lucide-react";
+import { User, Phone, Mail, MapPin, FileText, Heart } from "lucide-react";
 import Cliente from "../../../models/Cliente";
 import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
