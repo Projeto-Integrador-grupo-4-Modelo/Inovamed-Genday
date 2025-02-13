@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useContext } from "react";
 import { X } from "lucide-react";
-import Cliente from "../../../models/Cliente";
 import { atualizar } from "../../../service/Service";
 import { AuthContext } from "../../../context/AuthContext";
 import toast from "react-hot-toast";
+import Paciente from "../../../models/Paciente";
 
 interface AtualizarPacienteModalProps {
-  paciente: Cliente;
+  paciente: Paciente;
   isOpen: boolean;
   onClose: () => void;
-  onUpdate: (AtualizarPaciente: Cliente) => void;
+  onUpdate: (AtualizarPaciente: Paciente) => void;
 }
 
 export function AtualizarPacienteModal({
@@ -18,7 +18,7 @@ export function AtualizarPacienteModal({
   onClose,
   onUpdate,
 }: AtualizarPacienteModalProps) {
-  const [formData, setFormData] = useState<Omit<Cliente, "consulta">>({
+  const [formData, setFormData] = useState<Omit<Paciente, "consulta">>({
     id: 0,
     nome: "",
     email: "",
@@ -60,12 +60,12 @@ export function AtualizarPacienteModal({
 
   async function atualizarPaciente() {
     try {
-      await atualizar(`/clientes`, formData, setFormData, {
+      await atualizar(`/pacientes`, formData, setFormData, {
         headers: { Authorization: token },
       });
 
       toast.success("Paciente atualizado com sucesso!");
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     } catch (error: any) {
       if (error.toString().includes("403")) {
         handleLogout();

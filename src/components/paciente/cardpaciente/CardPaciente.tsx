@@ -8,14 +8,14 @@ import {
   Trash2,
   Edit,
 } from "lucide-react";
-import Cliente from "../../../models/Cliente";
 import { AtualizarPacienteModal } from "../atualizarpaciente/AtualizarPaciente";
 import { ConfirmarDeleteModal } from "../deletarpaciente/DeletarPaciente";
+import Paciente from "../../../models/Paciente";
 
 interface CardPacienteProps {
-  paciente: Cliente;
+  paciente: Paciente;
   onDelete: (id: number) => void;
-  onUpdate: (patient: Cliente) => void;
+  onUpdate: (patient: Paciente) => void;
 }
 
 export function CardPaciente({

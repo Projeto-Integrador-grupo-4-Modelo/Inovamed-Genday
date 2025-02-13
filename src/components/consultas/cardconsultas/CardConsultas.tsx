@@ -45,7 +45,7 @@ function CardConsultas({ consulta, onDelete, onUpdate }: CardConsultaProps) {
               <User className="w-6 h-6 text-teal-800" />
             </div>
             <h3 className="text-xl font-semibold text-white">
-              {consulta.cliente?.nome || "Paciente não informado"}
+              {consulta.paciente?.nome || "Paciente não informado"}
             </h3>
           </div>
           <div className="flex space-x-2">

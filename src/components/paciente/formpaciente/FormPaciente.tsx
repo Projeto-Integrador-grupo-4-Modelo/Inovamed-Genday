@@ -1,16 +1,16 @@
 import { User, Phone, Mail, MapPin, FileText, Heart } from "lucide-react";
-import Cliente from "../../../models/Cliente";
 import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from "../../../context/AuthContext";
 import { atualizar, buscar, cadastrar } from "../../../service/Service";
 import { RotatingLines } from "react-loader-spinner";
 import toast from "react-hot-toast";
+import Paciente from "../../../models/Paciente";
 
 function FormPaciente() {
   const navigate = useNavigate();
 
-  const [cliente, setCliente] = useState<Cliente>({} as Cliente);
+  const [paciente, setPaciente] = useState<Paciente>({} as Paciente);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const { usuario, handleLogout } = useContext(AuthContext);
@@ -20,7 +20,7 @@ function FormPaciente() {
 
   async function buscarPorId(id: string) {
     try {
-      await buscar(`/clientes/${id}`, setCliente, {
+      await buscar(`/pacientes/${id}`, setPaciente, {
         headers: { Authorization: token },
       });
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -47,8 +47,8 @@ function FormPaciente() {
   function atualizarEstado(e: ChangeEvent<HTMLInputElement>) {
     const { name, type, checked, value } = e.target;
 
-    setCliente({
-      ...cliente,
+    setPaciente({
+      ...paciente,
       [name]: type === "checkbox" ? checked : value,
     });
   }
@@ -57,18 +57,18 @@ function FormPaciente() {
     navigate("/dashboard/pacientes");
   }
 
-  async function gerarNovoCliente(e: ChangeEvent<HTMLFormElement>) {
+  async function gerarNovoPaciente(e: ChangeEvent<HTMLFormElement>) {
     e.preventDefault();
     setIsLoading(true);
 
     try {
       if (id !== undefined) {
-        await atualizar(`/clientes`, cliente, setCliente, {
+        await atualizar(`/pacientes`, paciente, setPaciente, {
           headers: { Authorization: token },
         });
         toast.success("O Paciente foi atualizado com sucesso!");
       } else {
-        await cadastrar(`/clientes`, cliente, setCliente, {
+        await cadastrar(`/pacientes`, paciente, setPaciente, {
           headers: { Authorization: token },
         });
         toast.success("O Paciente foi cadastrado com sucesso!");
@@ -94,7 +94,7 @@ function FormPaciente() {
             Formulário de Cadastro
           </h2>
 
-          <form onSubmit={gerarNovoCliente} className="space-y-6">
+          <form onSubmit={gerarNovoPaciente} className="space-y-6">
             <div>
               <label className="flex items-center text-sm font-medium mb-1">
                 <User className="w-4 h-4 mr-2 text-[#29bda6]" />
@@ -105,7 +105,7 @@ function FormPaciente() {
                 name="nome"
                 placeholder="Digite seu nome"
                 className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-[#29bda6] transition-colors"
-                value={cliente.nome || ""}
+                value={paciente.nome || ""}
                 onChange={atualizarEstado}
                 required
               />
@@ -121,7 +121,7 @@ function FormPaciente() {
                 name="email"
                 placeholder="Digite seu email"
                 className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-[#29bda6] transition-colors"
-                value={cliente.email || ""}
+                value={paciente.email || ""}
                 onChange={atualizarEstado}
                 required
               />
@@ -138,7 +138,7 @@ function FormPaciente() {
                   name="telefone"
                   placeholder="Digite seu telefone"
                   className="w-full px-4 py-2 border rounded-l-md focus:ring-2 focus:ring-[#29bda6] transition-colors"
-                  value={"+55" + (cliente.telefone?.replace(/^\+55/, "") || "")}
+                  value={"+55" + (paciente.telefone?.replace(/^\+55/, "") || "")}
                   onChange={(e) => atualizarEstado(e)}
                   required
                 />
@@ -156,7 +156,7 @@ function FormPaciente() {
                 name="cpf"
                 placeholder="Digite seu CPF"
                 className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-[#29bda6] transition-colors"
-                value={cliente.cpf || ""}
+                value={paciente.cpf || ""}
                 onChange={atualizarEstado}
                 required
               />
@@ -172,7 +172,7 @@ function FormPaciente() {
                 name="endereco"
                 placeholder="Digite seu endereço"
                 className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-[#29bda6] transition-colors"
-                value={cliente.endereco || ""}
+                value={paciente.endereco || ""}
                 onChange={atualizarEstado}
                 required
               />
@@ -185,7 +185,7 @@ function FormPaciente() {
                 <input
                   type="checkbox"
                   name="convenio"
-                  checked={cliente.convenio || false}
+                  checked={paciente.convenio || false}
                   onChange={atualizarEstado}
                   className="ml-2 h-4 w-4 text-[#29bda6] focus:ring-[#29bda6] border-[#29bda6] rounded"
                 />

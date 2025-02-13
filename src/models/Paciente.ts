@@ -1,6 +1,6 @@
 import Consulta from "./Consulta";
 
-export default interface Cliente {
+export default interface Paciente {
   id: number;
   nome: string;
   email: string;

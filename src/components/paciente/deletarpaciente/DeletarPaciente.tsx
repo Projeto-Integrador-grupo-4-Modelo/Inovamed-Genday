@@ -1,12 +1,12 @@
 import React from "react";
 import { AlertTriangle, X } from "lucide-react";
-import Cliente from "../../../models/Cliente";
+import Paciente from "../../../models/Paciente";
 
 interface ConfirmarDeleteModalProps {
   isOpen: boolean;
   onClose: () => void;
   onConfirm: () => void;
-  paciente: Cliente;
+  paciente: Paciente;
 }
 
 export function ConfirmarDeleteModal({

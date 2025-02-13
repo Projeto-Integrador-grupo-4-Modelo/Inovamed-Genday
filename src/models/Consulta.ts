@@ -1,4 +1,4 @@
-import Cliente from "./Cliente";
+import Paciente from "./Paciente";
 
 export default interface Consulta {
   id: number;
@@ -7,5 +7,5 @@ export default interface Consulta {
   data: string;
   medicoResponsavel: string;
   status: string;
-  cliente: Cliente | null;
+  paciente: Paciente | null;
 }

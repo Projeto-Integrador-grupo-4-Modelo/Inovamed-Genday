@@ -1,4 +1,3 @@
-
 import React, { useContext, useEffect, useState } from "react";
 import {
   Stethoscope,
@@ -10,10 +9,10 @@ import {
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import Consulta from "../../../models/Consulta";
-import Cliente from "../../../models/Cliente";
 import { buscar, cadastrar } from "../../../service/Service";
 import { toast } from "react-hot-toast";
 import { AuthContext } from "../../../context/AuthContext";
+import Paciente from "../../../models/Paciente";
 
 function FormConsultas() {
   const navigate = useNavigate();
@@ -25,9 +24,9 @@ function FormConsultas() {
     queixa: "",
     medicoResponsavel: "",
     status: "Pendente",
-    cliente: null,
+    paciente: null,
   });
-  const [cliente, setCliente] = useState<Cliente | null>(null);
+  const [paciente, setPaciente] = useState<Paciente | null>(null);
   const [cpf, setCpf] = useState<string>("");
   const [buscaRealizada, setBuscaRealizada] = useState(false);
 
@@ -39,25 +38,25 @@ function FormConsultas() {
     setBuscaRealizada(false);
 
     try {
-      let clienteEncontrado: Cliente | null = null;
+      let pacienteEncontrado: Paciente | null = null;
 
       await buscar(
-        `clientes/cpf/${cpf}`,
-        (data: Cliente) => {
-          clienteEncontrado = data;
-          setCliente(data);
+        `pacientes/cpf/${cpf}`,
+        (data: Paciente) => {
+          pacienteEncontrado = data;
+          setPaciente(data);
         },
         {
           headers: { Authorization: token },
         }
       );
 
-      if (clienteEncontrado) {
-        setConsulta((prev) => ({ ...prev, cliente: clienteEncontrado }));
+      if (pacienteEncontrado) {
+        setConsulta((prev) => ({ ...prev, paciente: pacienteEncontrado }));
       }
     } catch (error) {
-      setCliente(null);
-      setConsulta((prev) => ({ ...prev, cliente: null }));
+      setPaciente(null);
+      setConsulta((prev) => ({ ...prev, paciente: null }));
     } finally {
       setIsLoading(false);
       setBuscaRealizada(true);
@@ -92,8 +91,8 @@ function FormConsultas() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!consulta.cliente) {
-      toast.error("Selecione um cliente antes de cadastrar a consulta.");
+    if (!consulta.paciente) {
+      toast.error("Selecione um paciente antes de cadastrar a consulta.");
       return;
     }
 
@@ -121,13 +120,13 @@ function FormConsultas() {
 
   useEffect(() => {
     if (buscaRealizada) {
-      if (cliente) {
-        toast.success(`Cliente encontrado: ${cliente.nome}`);
+      if (paciente) {
+        toast.success(`Paciente encontrado: ${paciente.nome}`);
       } else {
-        toast.error("Nenhum Cliente encontrado!");
+        toast.error("Nenhum Paciente encontrado!");
       }
     }
-  }, [buscaRealizada, cliente]);
+  }, [buscaRealizada, paciente]);
 
   useEffect(() => {
     if (!token) {
@@ -137,12 +136,12 @@ function FormConsultas() {
   }, [token, navigate]);
 
   function abrirWhatsAppConsulta() {
-    if (!cliente || !cliente.telefone) {
-      toast.error("Cliente ou telefone inválido!");
+    if (!paciente || !paciente.telefone) {
+      toast.error("Paciente ou telefone inválido!");
       return;
     }
 
-    const telefoneFormatado = cliente.telefone.replace(/\D/g, "");
+    const telefoneFormatado = paciente.telefone.replace(/\D/g, "");
 
     const formatarData = (data: string) => {
       const partesData = data.split("-");
@@ -153,7 +152,7 @@ function FormConsultas() {
     };
 
     const mensagem = `
-    Olá ${decodeURIComponent(cliente.nome)}, sua consulta foi agendada com sucesso! 
+    Olá ${decodeURIComponent(paciente.nome)}, sua consulta foi agendada com sucesso! 
 
     Aqui estão os detalhes:
 
@@ -196,19 +195,19 @@ function FormConsultas() {
               />
               {buscaRealizada && (
                 <p
-                  className={`mt-2 text-sm ${cliente ? "text-green-600" : "text-red-600"
+                  className={`mt-2 text-sm ${paciente ? "text-green-600" : "text-red-600"
                     }`}
                 >
-                  {cliente
-                    ? `Cliente encontrado: ${cliente.nome}${cliente.convenio
+                  {paciente
+                    ? `Paciente encontrado: ${paciente.nome}${paciente.convenio
                       ? " - Este paciente possui convênio ✅"
                       : ""
                     }`
-                    : "Nenhum Cliente encontrado!"}
+                    : "Nenhum Paciente encontrado!"}
                 </p>
               )}
             </div>
-            {cliente && !cliente.convenio && (
+            {paciente && !paciente.convenio && (
               <div className="p-4 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700">
                 <p>Este paciente não possui convênio. Ofertas disponíveis:</p>
                 <ul className="list-disc ml-5">
@@ -305,8 +304,8 @@ function FormConsultas() {
             <div className="pt-6">
               <button
                 type="submit"
-                disabled={isLoading || !cliente}
-                className={`w-full py-3 px-4 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-[#6366f1] focus:ring-offset-2 text-lg font-medium ${isLoading || !cliente
+                disabled={isLoading || !paciente}
+                className={`w-full py-3 px-4 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-[#6366f1] focus:ring-offset-2 text-lg font-medium ${isLoading || !paciente
                   ? "bg-gray-400 cursor-not-allowed"
                   : "bg-[#29bda6] hover:bg-[#278b7c] text-white"
                   }`}
