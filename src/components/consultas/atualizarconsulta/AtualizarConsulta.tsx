@@ -20,10 +20,10 @@ export function AtualizarConsultaModal({
 }: AtualizarConsultaModalProps) {
   const [formData, setFormData] = useState<Consulta>({
     id: 0,
-    cliente: null,
+    paciente: null,
     especialidade: "",
     queixa: "",
-    data: "",
+    dataHora: "",
     medicoResponsavel: "",
     status: "",
   });
@@ -35,10 +35,10 @@ export function AtualizarConsultaModal({
     if (isOpen && consulta) {
       setFormData({
         id: consulta.id,
-        cliente: consulta.cliente,
+        paciente: consulta.paciente,
         especialidade: consulta.especialidade,
         queixa: consulta.queixa,
-        data: consulta.data,
+        dataHora: consulta.dataHora,
         medicoResponsavel: consulta.medicoResponsavel,
         status: consulta.status,
       });
@@ -61,7 +61,6 @@ export function AtualizarConsultaModal({
       });
 
       toast.success("Consulta atualizado com sucesso!");
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       if (error.toString().includes("403")) {
         handleLogout();
@@ -90,7 +89,7 @@ export function AtualizarConsultaModal({
             </label>
             <input
               type="text"
-              value={consulta.cliente?.nome || "Paciente não informado"}
+              value={consulta.paciente?.nome || "Paciente não informado"}
               disabled
               className="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100 text-gray-700"
             />
@@ -135,7 +134,7 @@ export function AtualizarConsultaModal({
             </label>
             <input
               type="date"
-              value={formData.data}
+              value={formData.dataHora}
               onChange={(e) =>
                 setFormData((prev) => ({ ...prev, data: e.target.value }))
               }
