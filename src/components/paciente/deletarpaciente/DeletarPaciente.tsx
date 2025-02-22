@@ -1,12 +1,12 @@
 import React from "react";
 import { AlertTriangle, X } from "lucide-react";
-import Cliente from "../../../models/Cliente";
+import Paciente from "../../../models/Paciente";
 
 interface ConfirmarDeleteModalProps {
   isOpen: boolean;
   onClose: () => void;
   onConfirm: () => void;
-  paciente: Cliente;
+  paciente: Paciente;
 }
 
 export function ConfirmarDeleteModal({
@@ -42,7 +42,7 @@ export function ConfirmarDeleteModal({
             <span className="font-semibold">{paciente.nome}</span>?
           </p>
 
-          <p className="text-gray-600 text-sm">
+          <p className="text-gray-600 text-sm italic font-semibold">
             Esta ação não pode ser desfeita.
           </p>
         </div>

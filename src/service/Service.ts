@@ -1,20 +1,19 @@
 import axios from "axios";
 
 const api = axios.create({
- baseURL: "https://projeto-crm.onrender.com/"
+  baseURL: "https://inovamed-backend-genday.onrender.com/",
 });
 
 export const cadastrarUsuario = async (
   url: string,
   dados: object,
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+
   setDados: Function
 ) => {
   const resposta = await api.post(url, dados);
   setDados(resposta.data);
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
 export const login = async (url: string, dados: object, setDados: Function) => {
   const resposta = await api.post(url, dados);
   setDados(resposta.data);
@@ -22,7 +21,7 @@ export const login = async (url: string, dados: object, setDados: Function) => {
 
 export const buscar = async (
   url: string,
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+
   setDados: Function,
   header: object
 ) => {
@@ -32,7 +31,7 @@ export const buscar = async (
 export const cadastrar = async (
   url: string,
   dados: object,
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+
   setDados: Function,
   header: object
 ) => {
@@ -43,7 +42,7 @@ export const cadastrar = async (
 export const atualizar = async (
   url: string,
   dados: object,
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+
   setDados: Function,
   header: object
 ) => {
@@ -56,7 +55,7 @@ export const deletar = async (url: string, header: object) => {
 
 export const verificarConvenio = async (
   url: string,
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+
   setDados: Function,
   header: object
 ) => {
@@ -67,7 +66,7 @@ export const verificarConvenio = async (
 export const atualizarConvenio = async (
   url: string,
   dados: object,
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+
   setDados: Function,
   header: object
 ) => {
