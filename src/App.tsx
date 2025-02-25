@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/home/Home";
-import FormConsulta from "./components/consultas/formconsultas/FormConsultas";
+import FormConsulta from "./components/consultas/formconsultas/FormConsulta";
 import FormPaciente from "./components/paciente/formpaciente/FormPaciente";
 import PaginaDashboardBase from "./pages/paginadashboardbase/PaginaDashboardBase";
 import Login from "./pages/login/Login";
@@ -11,6 +11,8 @@ import { Dashboard } from "./pages/dashboard/Dashboard";
 import { ListaConsultas } from "./components/consultas/listaconsultas/ListaConsultas";
 import { Toaster } from "react-hot-toast";
 import Navbar from "./components/navbar/Navbar";
+import FormMedico from "./components/medicos/formmedico/FormMedico";
+
 
 function App() {
   return (
@@ -48,6 +50,15 @@ function App() {
                 <>
                   <Navbar />
                   <FormPaciente />
+                </>
+              }
+            />
+            <Route
+              path="cadastro-medico"
+              element={
+                <>
+                  <Navbar />
+                  <FormMedico />
                 </>
               }
             />

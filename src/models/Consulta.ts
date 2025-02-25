@@ -1,3 +1,4 @@
+import Medico from "./Medico";
 import Paciente from "./Paciente";
 
 export default interface Consulta {
@@ -5,8 +6,8 @@ export default interface Consulta {
   especialidade: string;
   queixa: string;
   dataHora: string;
-  medicoResponsavel: string;
   status: string;
-  metodoPagamento: string;
+  statusPagamento: string;
   paciente: Paciente | null;
+  medico: Medico | null;
 }

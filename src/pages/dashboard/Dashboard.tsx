@@ -32,7 +32,7 @@ export function Dashboard() {
   useEffect(() => {
     async function buscarPacientes() {
       try {
-        await buscar("/clientes", setPacientes, {
+        await buscar("/pacientes", setPacientes, {
           headers: { Authorization: token },
         });
         // eslint-disable-next-line @typescript-eslint/no-explicit-any

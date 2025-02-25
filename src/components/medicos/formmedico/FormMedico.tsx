@@ -1,11 +1,19 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useState, useContext } from 'react';
 import { User, Stethoscope, FileText } from 'lucide-react';
 import Medico from '../../../models/Medico';
-
+import { cadastrar } from '../../../service/Service';
+import { AuthContext } from '../../../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
+import { RotatingLines } from 'react-loader-spinner';
 
 function FormMedico() {
+  const navigate = useNavigate();
   const [medico, setMedico] = useState<Medico>({} as Medico);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const { usuario, handleLogout } = useContext(AuthContext);
+  const token = usuario.token;
 
   function atualizarEstado(e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
     setMedico({
@@ -19,11 +27,19 @@ function FormMedico() {
     setIsLoading(true);
     
     try {
+      await cadastrar(`/medicos`, medico, setMedico, {
+        headers: { Authorization: token },
+      });
       
-      console.log('Médico cadastrado:', medico);
+      toast.success('Médico cadastrado com sucesso!');
       setMedico({} as Medico);
-    } catch (error) {
-      console.error('Erro ao cadastrar médico:', error);
+      navigate('/dashboard/cadastro-medico');
+    } catch (error: any) {
+      if (error.toString().includes('403')) {
+        handleLogout();
+      } else {
+        toast.error('Erro ao cadastrar médico.');
+      }
     } finally {
       setIsLoading(false);
     }
@@ -110,7 +126,19 @@ function FormMedico() {
                 disabled={isLoading}
                 className="flex-1 bg-[#29bda6] text-white py-2 px-4 rounded-md hover:bg-[#278b7c] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {isLoading ? 'Cadastrando...' : 'Cadastrar'}
+                {isLoading ? (
+                  <div className="flex justify-center">
+                    <RotatingLines
+                      strokeColor="white"
+                      strokeWidth="5"
+                      animationDuration="0.75"
+                      width="24"
+                      visible={true}
+                    />
+                  </div>
+                ) : (
+                  'Cadastrar'
+                )}
               </button>
               <button
                 type="button"
