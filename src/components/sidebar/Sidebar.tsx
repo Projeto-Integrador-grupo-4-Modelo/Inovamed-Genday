@@ -5,6 +5,7 @@ import {
   LayoutDashboard,
   User,
   ChevronDown,
+  Contact,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
@@ -36,6 +37,11 @@ export function Sidebar() {
           icon: UserPlus,
           label: "Paciente",
           path: "/dashboard/cadastro-paciente",
+        },
+        {
+          icon: Contact,
+          label: "Medico",
+          path: "/dashboard/cadastro-medico",
         },
       ],
     },

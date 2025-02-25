@@ -45,7 +45,7 @@ function CardConsultas({ consulta, onDelete, onUpdate }: CardConsultaProps) {
               <User className="w-6 h-6 text-teal-800" />
             </div>
             <h3 className="text-xl font-semibold text-white">
-              {consulta.cliente?.nome || "Paciente não informado"}
+              {consulta.paciente?.nome || "Paciente não informado"}
             </h3>
           </div>
           <div className="flex space-x-2">
@@ -68,7 +68,6 @@ function CardConsultas({ consulta, onDelete, onUpdate }: CardConsultaProps) {
 
         <div className="p-6 space-y-3">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* Informações 1 e 2 */}
             <div className="flex items-center space-x-3">
               <Stethoscope className="w-5 h-5 text-gray-500" />
               <span className="text-gray-600">{consulta.especialidade}</span>
@@ -80,7 +79,7 @@ function CardConsultas({ consulta, onDelete, onUpdate }: CardConsultaProps) {
 
             <div className="flex items-center space-x-3">
               <Calendar className="w-5 h-5 text-gray-500" />
-              <span className="text-gray-600">{consulta.data}</span>
+              <span className="text-gray-600">{consulta.dataHora}</span>
             </div>
             <div className="flex items-center space-x-3">
               <ClipboardList className="w-5 h-5 text-gray-500" />
