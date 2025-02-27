@@ -91,7 +91,7 @@ export function CardPaciente({
             </div>
 
             {isDetailsVisible && (
-              <div className="p-4 bg-white rounded-lg shadow-sm">
+              <div className="p-4 bg-gray-50 rounded-lg ">
                 <h4 className="text-lg font-semibold text-gray-800 mb-3">
                   Endereço
                 </h4>

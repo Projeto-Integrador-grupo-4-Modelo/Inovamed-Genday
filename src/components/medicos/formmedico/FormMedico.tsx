@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { RotatingLines } from 'react-loader-spinner';
 
+
 function FormMedico() {
   const navigate = useNavigate();
   const [medico, setMedico] = useState<Medico>({} as Medico);
@@ -25,12 +26,12 @@ function FormMedico() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setIsLoading(true);
-    
+
     try {
       await cadastrar(`/medicos`, medico, setMedico, {
         headers: { Authorization: token },
       });
-      
+
       toast.success('Médico cadastrado com sucesso!');
       setMedico({} as Medico);
       navigate('/dashboard/cadastro-medico');

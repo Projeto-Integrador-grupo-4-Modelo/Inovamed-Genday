@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://inovamed-backend-genday.onrender.com/",
+  baseURL: "https://inovamed-backend-genday.onrender.com",
 });
 
 export const cadastrarUsuario = async (
