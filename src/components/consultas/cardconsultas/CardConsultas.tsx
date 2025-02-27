@@ -10,6 +10,8 @@ import {
   Edit,
   AlertTriangle,
   Stethoscope,
+  Contact,
+  CreditCard,
 } from "lucide-react";
 import Consulta from "../../../models/Consulta";
 import { AtualizarConsultaModal } from "../atualizarconsulta/AtualizarConsulta";
@@ -39,7 +41,7 @@ function CardConsultas({ consulta, onDelete, onUpdate }: CardConsultaProps) {
   return (
     <>
       <div className="bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden">
-        <div className="bg-teal-800 px-6 py-4 flex items-center justify-between">
+        <div className="bg-[#00948aff] px-6 py-4 flex items-center justify-between">
           <div className="flex items-center space-x-3">
             <div className="bg-white p-2 rounded-full">
               <User className="w-6 h-6 text-teal-800" />
@@ -69,29 +71,30 @@ function CardConsultas({ consulta, onDelete, onUpdate }: CardConsultaProps) {
         <div className="p-6 space-y-3">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="flex items-center space-x-3">
-              <Stethoscope className="w-5 h-5 text-gray-500" />
+              <Stethoscope className="w-5 h-5 mr-2 text-gray-500" />
               <span className="text-gray-600">{consulta.especialidade}</span>
             </div>
             <div className="flex items-center space-x-3">
-              <AlertTriangle className="w-5 h-5 text-gray-500" />
-              <span className="text-gray-600">{consulta.queixa}</span>
+              <Contact className="w-5 h-5 text-gray-500" />
+              <span className="text-gray-600">Dr(a). {consulta.medico?.nome}</span>
             </div>
-
             <div className="flex items-center space-x-3">
               <Calendar className="w-5 h-5 text-gray-500" />
               <span className="text-gray-600">{consulta.dataHora}</span>
             </div>
             <div className="flex items-center space-x-3">
               <ClipboardList className="w-5 h-5 text-gray-500" />
-              <span className="text-gray-600">
-                {consulta.medicoResponsavel}
-              </span>
+              <span className="text-gray-600">{consulta.queixa}</span>
             </div>
             <div className="flex items-center space-x-3">
               {statusIcons[consulta.status] || (
                 <XCircle className="w-5 h-5 text-gray-600 mr-2" />
               )}
               <span className="text-gray-600">{consulta.status}</span>
+            </div>
+            <div className="flex items-center space-x-3">
+              <CreditCard className="w-5 h-5 text-gray-500" />
+              <span className="text-gray-600">{consulta.statusPagamento}</span>
             </div>
           </div>
         </div>

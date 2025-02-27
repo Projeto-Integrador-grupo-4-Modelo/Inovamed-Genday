@@ -1,5 +1,4 @@
-import { User, Phone, Mail, MapPin, FileText, Heart } from "lucide-react";
-import Cliente from "../../../models/Paciente";
+import { User, Phone, Mail, MapPin, FileText, Heart, Building2, Building, Home} from "lucide-react";
 import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from "../../../context/AuthContext";
@@ -178,7 +177,7 @@ function FormPaciente() {
 
               <div>
                 <label className="flex items-center text-sm font-medium mb-1">
-                  <MapPin className="w-4 h-4 mr-2 text-[#29bda6]" />
+                  <Building className="w-4 h-4 mr-2 text-[#29bda6]" />
                   Complemento
                 </label>
                 <input
@@ -212,7 +211,7 @@ function FormPaciente() {
 
               <div>
                 <label className="flex items-center text-sm font-medium mb-1">
-                  <MapPin className="w-4 h-4 mr-2 text-[#29bda6]" />
+                  <Home className="w-4 h-4 mr-2 text-[#29bda6]" />
                   Bairro
                 </label>
                 <input
@@ -230,7 +229,7 @@ function FormPaciente() {
             <div className="grid grid-cols-1 gap-4">
               <label className="flex flex-col text-sm font-medium mb-1">
                 <span className="flex items-center mb-1">
-                  <MapPin className="w-4 h-4 mr-2 text-[#29bda6]" />
+                  <Building2 className="w-4 h-4 mr-2 text-[#29bda6]" />
                   Cidade
                 </span>
                 <input
