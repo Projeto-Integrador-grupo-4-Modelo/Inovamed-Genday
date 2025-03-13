@@ -187,12 +187,6 @@ Aguardamos você na data e horário agendado. Qualquer dúvida, estamos à dispo
     }
   }
 
-  useEffect(() => {
-    if (especialidade) {
-      buscarMedicosEspecialistas();
-    }
-  }, [especialidade]);
-
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const idSelecionado = event.target.value;
     const medico = medicosEspecialistas.find(
@@ -200,6 +194,12 @@ Aguardamos você na data e horário agendado. Qualquer dúvida, estamos à dispo
     );
     setValue("medico", medico);
   };
+
+  useEffect(() => {
+    if (especialidade) {
+      buscarMedicosEspecialistas();
+    }
+  }, [especialidade]);
 
   useEffect(() => {
     if (paciente?.convenio) {
