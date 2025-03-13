@@ -1,11 +1,4 @@
-
-
-
-
-
-
-function Cadastro (){
-  
+function Cadastro() {
   return (
     <form className="space-y-6">
       <div>
@@ -15,39 +8,29 @@ function Cadastro (){
         <input
           type="text"
           name="name"
-          value=''
-          
+          value=""
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-teal-500 focus:ring-teal-500"
         />
-        
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700">
-          Email
-        </label>
+        <label className="block text-sm font-medium text-gray-700">Email</label>
         <input
           type="email"
           name="email"
-          value=''
-          
+          value=""
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-teal-500 focus:ring-teal-500"
         />
-       
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700">
-          Senha
-        </label>
+        <label className="block text-sm font-medium text-gray-700">Senha</label>
         <input
           type="password"
           name="password"
-          value=''
-          
+          value=""
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-teal-500 focus:ring-teal-500"
         />
-        
       </div>
 
       <div>
@@ -57,25 +40,19 @@ function Cadastro (){
         <input
           type="password"
           name="confirmPassword"
-          value=''
-          
+          value=""
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-teal-500 focus:ring-teal-500"
         />
-       
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700">
-          Idade
-        </label>
+        <label className="block text-sm font-medium text-gray-700">Idade</label>
         <input
           type="number"
           name="age"
-          value=''
-          
+          value=""
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-teal-500 focus:ring-teal-500"
         />
-        
       </div>
 
       <div>
@@ -85,11 +62,9 @@ function Cadastro (){
         <input
           type="tel"
           name="phone"
-          value=''
-          
+          value=""
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-teal-500 focus:ring-teal-500"
         />
-       
       </div>
 
       <div>
@@ -97,8 +72,6 @@ function Cadastro (){
           <input
             type="checkbox"
             name="hasInsurance"
-           
-            
             className="h-4 w-4 text-teal-600 focus:ring-teal-500 border-gray-300 rounded"
           />
           <label className="ml-2 block text-sm text-gray-700">
@@ -106,8 +79,6 @@ function Cadastro (){
           </label>
         </div>
       </div>
-
-      
 
       <button
         type="submit"
@@ -118,4 +89,4 @@ function Cadastro (){
     </form>
   );
 }
-export default Cadastro
+export default Cadastro;

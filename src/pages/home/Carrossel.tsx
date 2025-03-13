@@ -11,7 +11,7 @@ const features = [
   {
     title: "Inova Med",
     description: "Simplificando sua gestão, potencializando seu atendimento.",
-    image: "https://i.imgur.com/hq0SoDS.png",
+    image: "https://i.imgur.com/10wLWO0.png",
     icon: Activity,
   },
   {
