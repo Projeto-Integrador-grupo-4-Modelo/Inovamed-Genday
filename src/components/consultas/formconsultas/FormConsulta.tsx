@@ -83,7 +83,7 @@ const FormConsulta = () => {
                 headers: { Authorization: token },
             });
             toast.success('Consulta cadastrada com sucesso!');
-            navigate("/dashboard")
+            navigate("/dashboard/consulta")
         } catch (error: any) {
             if (error.toString().includes('403')) {
                 handleLogout();
@@ -303,7 +303,7 @@ const FormConsulta = () => {
                             <div>
                                 <label className="flex items-center text-sm font-medium text-gray-700 mb-1">
                                     <Activity className="w-4 h-4 mr-2 text-[#29bda6]" />
-                                    Status
+                                    Status da Consulta
                                 </label>
                                 <select
                                     defaultValue={"Em andamento"}
