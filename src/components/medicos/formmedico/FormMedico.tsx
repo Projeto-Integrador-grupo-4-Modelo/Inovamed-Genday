@@ -1,12 +1,11 @@
-import React, { ChangeEvent, useState, useContext } from 'react';
-import { User, Stethoscope, FileText } from 'lucide-react';
-import Medico from '../../../models/Medico';
-import { cadastrar } from '../../../service/Service';
-import { AuthContext } from '../../../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
-import toast from 'react-hot-toast';
-import { RotatingLines } from 'react-loader-spinner';
-
+import React, { ChangeEvent, useState, useContext } from "react";
+import { User, Stethoscope, FileText } from "lucide-react";
+import Medico from "../../../models/Medico";
+import { cadastrar } from "../../../service/Service";
+import { AuthContext } from "../../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import { RotatingLines } from "react-loader-spinner";
 
 function FormMedico() {
   const navigate = useNavigate();
@@ -16,7 +15,9 @@ function FormMedico() {
   const { usuario, handleLogout } = useContext(AuthContext);
   const token = usuario.token;
 
-  function atualizarEstado(e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
+  function atualizarEstado(
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) {
     setMedico({
       ...medico,
       [e.target.name]: e.target.value,
@@ -32,14 +33,14 @@ function FormMedico() {
         headers: { Authorization: token },
       });
 
-      toast.success('Médico cadastrado com sucesso!');
+      toast.success("Médico cadastrado com sucesso!");
       setMedico({} as Medico);
-      navigate('/dashboard/cadastro-medico');
+      navigate("/dashboard/cadastro-medico");
     } catch (error: any) {
-      if (error.toString().includes('403')) {
+      if (error.toString().includes("403")) {
         handleLogout();
       } else {
-        toast.error('Erro ao cadastrar médico.');
+        toast.error("Erro ao cadastrar médico.");
       }
     } finally {
       setIsLoading(false);
@@ -47,16 +48,16 @@ function FormMedico() {
   }
 
   const especialidades = [
-    'Cardiologia',
-    'Dermatologia',
-    'Endocrinologia',
-    'Ginecologia',
-    'Neurologia',
-    'Oftalmologia',
-    'Ortopedia',
-    'Pediatria',
-    'Psiquiatria',
-    'Urologia'
+    "Cardiologia",
+    "Dermatologia",
+    "Endocrinologia",
+    "Ginecologia",
+    "Neurologia",
+    "Oftalmologia",
+    "Ortopedia",
+    "Pediatria",
+    "Psiquiatria",
+    "Urologia",
   ];
 
   return (
@@ -78,7 +79,7 @@ function FormMedico() {
                 name="nome"
                 placeholder="Digite o nome completo"
                 className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-[#29bda6] transition-colors"
-                value={medico.nome || ''}
+                value={medico.nome || ""}
                 onChange={atualizarEstado}
                 required
               />
@@ -92,7 +93,7 @@ function FormMedico() {
               <select
                 name="especialidade"
                 className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-[#29bda6] transition-colors"
-                value={medico.especialidade || ''}
+                value={medico.especialidade || ""}
                 onChange={atualizarEstado}
                 required
               >
@@ -115,7 +116,7 @@ function FormMedico() {
                 name="crm"
                 placeholder="Digite o número do CRM"
                 className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-[#29bda6] transition-colors"
-                value={medico.crm || ''}
+                value={medico.crm || ""}
                 onChange={atualizarEstado}
                 required
               />
@@ -138,7 +139,7 @@ function FormMedico() {
                     />
                   </div>
                 ) : (
-                  'Cadastrar'
+                  "Cadastrar"
                 )}
               </button>
               <button

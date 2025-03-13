@@ -55,23 +55,21 @@ export function ListaConsultas() {
 
     const termLowerCase = removerAcentos(searchTerm.toLowerCase());
     const filtradas = consultas.filter((consulta) => {
-      // Converte todos os valores dos atributos para string e verifica se algum contém o termo de busca
       return Object.entries(consulta).some(([key, value]) => {
-        // Ignora o atributo id na busca se for um número
         if (key === "id" && typeof value === "number") {
           return value.toString().includes(termLowerCase);
         }
-        
-        // Para objetos aninhados (como tema, usuario, etc)
+
         if (value && typeof value === "object") {
           return Object.values(value).some(
             (nestedValue) =>
               nestedValue &&
-              removerAcentos(String(nestedValue).toLowerCase()).includes(termLowerCase)
+              removerAcentos(String(nestedValue).toLowerCase()).includes(
+                termLowerCase
+              )
           );
         }
-        
-        // Para valores simples
+
         return (
           value &&
           removerAcentos(String(value).toLowerCase()).includes(termLowerCase)
@@ -115,7 +113,7 @@ export function ListaConsultas() {
         <h2 className="text-3xl font-bold text-[#00948aff] mb-4 md:mb-0">
           Consultas Cadastradas
         </h2>
-        
+
         {/* Barra de pesquisa com largura reduzida */}
         <div className="relative w-full md:w-64 lg:w-80">
           <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -130,7 +128,7 @@ export function ListaConsultas() {
           />
         </div>
       </div>
-      
+
       {consultasFiltradas.length > 0 ? (
         <div className="flex flex-col-reverse gap-y-8">
           {consultasFiltradas.map((consulta) => (
@@ -145,7 +143,9 @@ export function ListaConsultas() {
       ) : (
         <div className="text-center py-8">
           <p className="text-gray-500">
-            {searchTerm ? "Nenhuma consulta encontrada para esta pesquisa." : "Nenhuma consulta cadastrada."}
+            {searchTerm
+              ? "Nenhuma consulta encontrada para esta pesquisa."
+              : "Nenhuma consulta cadastrada."}
           </p>
         </div>
       )}

@@ -1,4 +1,14 @@
-import { User, Phone, Mail, MapPin, FileText, Heart, Building2, Building, Home} from "lucide-react";
+import {
+  User,
+  Phone,
+  Mail,
+  MapPin,
+  FileText,
+  Heart,
+  Building2,
+  Building,
+  Home,
+} from "lucide-react";
 import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from "../../../context/AuthContext";
@@ -93,6 +103,7 @@ function FormPaciente() {
           </h2>
 
           <form onSubmit={gerarNovoCliente} className="space-y-6">
+            {/* Nome */}
             <div>
               <label className="flex items-center text-sm font-medium mb-1">
                 <User className="w-4 h-4 mr-2 text-[#29bda6]" />
@@ -109,6 +120,7 @@ function FormPaciente() {
               />
             </div>
 
+            {/* Email */}
             <div>
               <label className="flex items-center text-sm font-medium mb-1">
                 <Mail className="w-4 h-4 mr-2 text-[#29bda6]" />
@@ -125,6 +137,7 @@ function FormPaciente() {
               />
             </div>
 
+            {/* Telefone */}
             <div>
               <label className="flex items-center text-sm font-medium mb-1">
                 <Phone className="w-4 h-4 mr-2 text-[#29bda6]" />
@@ -141,7 +154,7 @@ function FormPaciente() {
               />
             </div>
 
-
+            {/* CPF */}
             <div>
               <label className="flex items-center text-sm font-medium mb-1">
                 <FileText className="w-4 h-4 mr-2 text-[#29bda6]" />
@@ -158,6 +171,7 @@ function FormPaciente() {
               />
             </div>
 
+            {/* Endereço e Complemento */}
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="flex items-center text-sm font-medium mb-1">
@@ -192,6 +206,7 @@ function FormPaciente() {
               </div>
             </div>
 
+            {/* CEP e Bairro */}
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="flex items-center text-sm font-medium mb-1">
@@ -226,24 +241,24 @@ function FormPaciente() {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 gap-4">
-              <label className="flex flex-col text-sm font-medium mb-1">
-                <span className="flex items-center mb-1">
-                  <Building2 className="w-4 h-4 mr-2 text-[#29bda6]" />
-                  Cidade
-                </span>
-                <input
-                  type="text"
-                  name="cidade"
-                  placeholder="Digite sua cidade"
-                  className="w-48 px-4 py-2 border rounded-md focus:ring-2 focus:ring-[#29bda6] transition-colors"
-                  value={paciente.cidade || ""}
-                  onChange={atualizarEstado}
-                  required
-                />
+            {/* Cidade */}
+            <div>
+              <label className="flex items-center text-sm font-medium mb-1">
+                <Building2 className="w-4 h-4 mr-2 text-[#29bda6]" />
+                Cidade
               </label>
+              <input
+                type="text"
+                name="cidade"
+                placeholder="Digite sua cidade"
+                className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-[#29bda6] transition-colors"
+                value={paciente.cidade || ""}
+                onChange={atualizarEstado}
+                required
+              />
             </div>
 
+            {/* Convênio */}
             <div className="flex items-center">
               <Heart className="w-4 h-4 mr-2 text-[#29bda6]" />
               <label className="text-sm font-medium">
@@ -258,6 +273,7 @@ function FormPaciente() {
               </label>
             </div>
 
+            {/* Botões */}
             <div className="flex gap-4 pt-4">
               <button
                 type="submit"

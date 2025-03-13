@@ -103,7 +103,7 @@ function Login() {
         <div className="flex items-center justify-center mb-8">
           <h1 className="text-2xl font-bold tracking-tight flex items-center">
             <img
-              src="https://i.imgur.com/ORaVOV1.png"
+              src="https://i.imgur.com/bJVLZvU.jpg"
               alt="inovamed"
               className="h-40 "
             />
@@ -196,7 +196,7 @@ function Login() {
                 onChange={handleConfirmarSenha}
               />
             </div>
-            <div>
+            {/* <div>
               <label className="block text-sm font-medium text-gray-700 mb-1 pl-1">
                 Foto
               </label>
@@ -210,7 +210,7 @@ function Login() {
                   atualizarEstadoCadastro(e)
                 }
               />
-            </div>
+            </div> */}
 
             <button
               type="submit"
