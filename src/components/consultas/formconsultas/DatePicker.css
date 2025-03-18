@@ -33,7 +33,7 @@
 
 .react-datepicker__day--selected {
   background-color: #29bda6;
-  color: white;
+  color: white !important;
 }
 
 .react-datepicker__day--today {
