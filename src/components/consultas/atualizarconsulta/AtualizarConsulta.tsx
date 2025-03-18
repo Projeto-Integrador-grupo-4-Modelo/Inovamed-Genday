@@ -72,6 +72,39 @@ export function AtualizarConsultaModal({
     }
   }
 
+  const especialidades = [
+    "Cardiologia",
+    "Dermatologia",
+    "Endocrinologia",
+    "Ginecologia",
+    "Neurologia",
+    "Oftalmologia",
+    "Ortopedia",
+    "Pediatria",
+    "Psiquiatria",
+    "Urologia",
+  ];
+
+  const [especialidade, setEspecialidade] = useState("");
+  const [medicosEspecialistas, setMedicosEspecialistas] = useState<Medico[]>(
+    []
+  );
+
+  useEffect(() => {
+    if (especialidade) {
+      buscar(
+        `/medicos/especialidade/${especialidade}`,
+        setMedicosEspecialistas,
+        {
+          headers: {
+            Authorization: token,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+    }
+  }, [especialidade]);
+
   if (!isOpen) return null;
 
   return (
@@ -107,18 +140,18 @@ export function AtualizarConsultaModal({
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Especialidade
             </label>
-            <input
-              type="text"
-              value={formData.especialidade}
-              onChange={(e) =>
-                setFormData((prev) => ({
-                  ...prev,
-                  especialidade: e.target.value,
-                }))
-              }
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-teal-600"
-              required
-            />
+            <select
+              value={especialidade}
+              onChange={(e) => setEspecialidade(e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#29bda6] focus:border-[#29bda6] transition-colors"
+            >
+              <option value="">Selecione uma especialidade</option>
+              {especialidades.map((esp) => (
+                <option key={esp} value={esp}>
+                  {esp}
+                </option>
+              ))}
+            </select>
           </div>
 
           {/* Queixa */}
@@ -162,23 +195,18 @@ export function AtualizarConsultaModal({
               Médico Responsável
             </label>
             <select
-              value={formData.medico?.id || ""}
               onChange={(e) => {
-                const medicoSelecionado = medicos.find(
+                const medicoSelecionado = medicosEspecialistas.find(
                   (m) => m.id === Number(e.target.value)
                 );
-                setFormData((prev) => ({
-                  ...prev,
-                  medico: medicoSelecionado || null,
-                }));
+                setValue("medico", medicoSelecionado);
               }}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-teal-600"
-              required
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#29bda6] focus:border-[#29bda6] transition-colors"
             >
               <option value="">Selecione o médico</option>
-              {medicos.map((medico) => (
+              {medicosEspecialistas.map((medico) => (
                 <option key={medico.id} value={medico.id}>
-                  {medico.nome} - {medico.especialidade}
+                  Dr(a). {medico.nome} - CRM: {medico.crm}
                 </option>
               ))}
             </select>
