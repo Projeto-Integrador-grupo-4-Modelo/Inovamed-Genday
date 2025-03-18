@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
 import { X } from "lucide-react";
 import Consulta from "../../../models/Consulta";
+import Medico from "../../../models/Medico";
 import { AuthContext } from "../../../context/AuthContext";
 import toast from "react-hot-toast";
-import { atualizar } from "../../../service/Service";
+import { atualizar, buscar } from "../../../service/Service"; // Supondo que 'buscar' seja o método GET da sua API.
 
 interface AtualizarConsultaModalProps {
   consulta: Consulta;
@@ -24,35 +25,38 @@ export function AtualizarConsultaModal({
     especialidade: "",
     queixa: "",
     dataHora: "",
-    medicoResponsavel: "",
+    medico: null,
+    statusPagamento: "",
     status: "",
   });
 
+  const [medicos, setMedicos] = useState<Medico[]>([]);
   const { usuario, handleLogout } = useContext(AuthContext);
   const token = usuario.token;
 
   useEffect(() => {
-    if (isOpen && consulta) {
-      setFormData({
-        id: consulta.id,
-        paciente: consulta.paciente,
-        especialidade: consulta.especialidade,
-        queixa: consulta.queixa,
-        dataHora: consulta.dataHora,
-        medicoResponsavel: consulta.medicoResponsavel,
-        status: consulta.status,
+    if (isOpen) {
+      buscar("/medicos", setMedicos, {
+        headers: { Authorization: token },
+      }).catch((error) => {
+        console.error("Erro ao buscar médicos:", error);
+        if (error.toString().includes("403")) handleLogout();
       });
+    }
+  }, [isOpen, token, handleLogout]);
+
+  useEffect(() => {
+    if (isOpen && consulta) {
+      setFormData({ ...consulta });
     }
   }, [isOpen, consulta]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     await atualizarConsulta();
-    onUpdate({ ...consulta, ...formData });
+    onUpdate(formData);
     onClose();
   };
-
-  if (!isOpen) return null;
 
   async function atualizarConsulta() {
     try {
@@ -60,13 +64,15 @@ export function AtualizarConsultaModal({
         headers: { Authorization: token },
       });
 
-      toast.success("Consulta atualizado com sucesso!");
+      toast.success("Consulta atualizada com sucesso!");
     } catch (error: any) {
       if (error.toString().includes("403")) {
         handleLogout();
       }
     }
   }
+
+  if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -83,6 +89,7 @@ export function AtualizarConsultaModal({
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Paciente */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Paciente
@@ -95,6 +102,7 @@ export function AtualizarConsultaModal({
             />
           </div>
 
+          {/* Especialidade */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Especialidade
@@ -113,6 +121,7 @@ export function AtualizarConsultaModal({
             />
           </div>
 
+          {/* Queixa */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Queixa
@@ -128,43 +137,54 @@ export function AtualizarConsultaModal({
             />
           </div>
 
+          {/* Data */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Data
             </label>
             <input
               type="date"
-              value={formData.dataHora}
+              value={formData.dataHora.split("T")[0]} // Caso venha no formato ISO
               onChange={(e) =>
-                setFormData((prev) => ({ ...prev, data: e.target.value }))
+                setFormData((prev) => ({
+                  ...prev,
+                  dataHora: e.target.value,
+                }))
               }
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-teal-600"
               required
             />
           </div>
 
+          {/* Médico */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Médico Responsável
             </label>
             <select
-              value={formData.medicoResponsavel}
-              onChange={(e) =>
+              value={formData.medico?.id || ""}
+              onChange={(e) => {
+                const medicoSelecionado = medicos.find(
+                  (m) => m.id === Number(e.target.value)
+                );
                 setFormData((prev) => ({
                   ...prev,
-                  medicoResponsavel: e.target.value,
-                }))
-              }
+                  medico: medicoSelecionado || null,
+                }));
+              }}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-teal-600"
               required
             >
               <option value="">Selecione o médico</option>
-              <option value="Dr. Silva">Dr. Silva</option>
-              <option value="Dr. Costa">Dr. Costa</option>
-              <option value="Dr. Almeida">Dr. Almeida</option>
+              {medicos.map((medico) => (
+                <option key={medico.id} value={medico.id}>
+                  {medico.nome} - {medico.especialidade}
+                </option>
+              ))}
             </select>
           </div>
 
+          {/* Status */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Status
@@ -185,6 +205,7 @@ export function AtualizarConsultaModal({
             </select>
           </div>
 
+          {/* Botões */}
           <div className="flex justify-end space-x-3 mt-6">
             <button
               type="button"
@@ -195,11 +216,6 @@ export function AtualizarConsultaModal({
             </button>
             <button
               type="submit"
-              onClick={(e) => {
-                e.preventDefault();
-                onUpdate({ ...consulta, ...formData });
-                onClose();
-              }}
               className="px-4 py-2 bg-teal-600 text-white rounded-md hover:bg-teal-700"
             >
               Salvar
